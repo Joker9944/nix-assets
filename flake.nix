@@ -30,5 +30,12 @@
       packages = createPkgsRecursive ./assets;
 
       formatter = pkgs.alejandra;
-    });
+    })
+    // {
+      overlays.assets = final: prev: {
+        custom = lib.attrsets.recursiveUpdate (lib.attrsets.optionalAttrs (prev.custom != null) prev.custom) {
+          assets = self.packages.${prev.system};
+        };
+      };
+    };
 }
