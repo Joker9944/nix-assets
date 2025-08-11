@@ -10,7 +10,8 @@ Special permission for the usage of `the seer` image was given to me by [scary-P
 
 ## Assets included
 
-| file                                                                                   | author                                                            | source                                                                      |
-|----------------------------------------------------------------------------------------|-------------------------------------------------------------------|-----------------------------------------------------------------------------|
-| [the seer](assets/images/profile/the-seer.1500x2091.jpg)                               | [scary-PANDA](https://www.deviantart.com/scary-panda)             | [deviantart](https://www.deviantart.com/scary-panda/art/the-seer-704744067) |
-| [Black Sand Dunes](https://images.pexels.com/photos/2387793/pexels-photo-2387793.jpeg) | [Adrien Olichon](https://www.pexels.com/@adrien-olichon-1257089/) | [pexels](https://www.pexels.com/photo/black-sand-dunes-2387793/)            |
+| file                                                                                                        | author                                                            | source                                                                               |
+|-------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|--------------------------------------------------------------------------------------|
+| [the seer](assets/images/profile/the-seer.1500x2091.jpg)                                                    | [scary-PANDA](https://www.deviantart.com/scary-panda)             | [deviantart](https://www.deviantart.com/scary-panda/art/the-seer-704744067)          |
+| [Black Sand Dunes](https://images.pexels.com/photos/2387793/pexels-photo-2387793.jpeg)                      | [Adrien Olichon](https://www.pexels.com/@adrien-olichon-1257089/) | [pexels](https://www.pexels.com/photo/black-sand-dunes-2387793/)                     |
+| [Misty Forest with Pine Trees in Fog](https://images.pexels.com/photos/31979792/pexels-photo-31979792.jpeg) | [eberhard grossgasteiger](https://www.pexels.com/@eberhardgross/) | [pexels](https://www.pexels.com/photo/misty-forest-with-pine-trees-in-fog-31979792/) |
