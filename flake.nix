@@ -15,6 +15,8 @@
   in
     inputs.flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
+
+      utility.custom = import ./lib/imageDerivation.nix {inherit lib pkgs;};
     in {
       packages = let
         createPkgsRecursive = dir:
@@ -24,7 +26,7 @@
               value =
                 if entry.value == "directory"
                 then createPkgsRecursive (lib.path.append dir entry.name)
-                else pkgs.callPackage (lib.path.append dir entry.name) {};
+                else pkgs.callPackage (lib.path.append dir entry.name) {inherit utility;};
             })
             (lib.attrsets.attrsToList (lib.attrsets.filterAttrs (filename: filetype: filetype == "directory" || lib.strings.hasSuffix ".nix" filename) (builtins.readDir dir)))
           );
