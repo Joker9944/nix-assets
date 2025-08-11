@@ -10,24 +10,26 @@
     self,
     nixpkgs,
     ...
-  }:
+  }: let
+    inherit (nixpkgs) lib;
+  in
     inputs.flake-utils.lib.eachDefaultSystem (system: let
-      inherit (nixpkgs) lib;
       pkgs = nixpkgs.legacyPackages.${system};
-
-      createPkgsRecursive = dir:
-        lib.attrsets.listToAttrs (
-          lib.lists.map (entry: {
-            name = lib.strings.removeSuffix ".nix" entry.name;
-            value =
-              if entry.value == "directory"
-              then createPkgsRecursive (lib.path.append dir entry.name)
-              else pkgs.callPackage (lib.path.append dir entry.name) {};
-          })
-          (lib.attrsets.attrsToList (lib.attrsets.filterAttrs (filename: filetype: filetype == "directory" || lib.strings.hasSuffix ".nix" filename) (builtins.readDir dir)))
-        );
     in {
-      packages = createPkgsRecursive ./assets;
+      packages = let
+        createPkgsRecursive = dir:
+          lib.attrsets.listToAttrs (
+            lib.lists.map (entry: {
+              name = lib.strings.removeSuffix ".nix" entry.name;
+              value =
+                if entry.value == "directory"
+                then createPkgsRecursive (lib.path.append dir entry.name)
+                else pkgs.callPackage (lib.path.append dir entry.name) {};
+            })
+            (lib.attrsets.attrsToList (lib.attrsets.filterAttrs (filename: filetype: filetype == "directory" || lib.strings.hasSuffix ".nix" filename) (builtins.readDir dir)))
+          );
+      in
+        createPkgsRecursive ./assets;
 
       formatter = pkgs.alejandra;
     })
