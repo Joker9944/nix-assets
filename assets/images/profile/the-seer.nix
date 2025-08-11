@@ -3,10 +3,7 @@ pkgs.stdenv.mkDerivation rec {
   pname = "the-seer";
   version = "1.0.0";
 
-  meta = {
-    description = "${pname} by scary-PANDA cropped for avatar usage.";
-    license = pkgs.lib.licenses.unfree;
-  };
+  meta.description = "${pname} by scary-PANDA cropped for avatar usage.";
 
   src = ./.;
 

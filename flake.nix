@@ -35,7 +35,7 @@
     })
     // {
       overlays.assets = final: prev: {
-        custom = lib.attrsets.recursiveUpdate (lib.attrsets.optionalAttrs (lib.attrsets.hasAttr "custom" prev) prev.custom) {
+        custom = lib.attrsets.recursiveUpdate (lib.attrsets.optionalAttrs (prev ? custom) prev.custom) {
           assets = self.packages.${prev.system};
         };
       };

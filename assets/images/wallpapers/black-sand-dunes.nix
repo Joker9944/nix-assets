@@ -3,10 +3,7 @@ pkgs.stdenv.mkDerivation rec {
   pname = "black-sand-dunes";
   version = "1.0.0";
 
-  meta = {
-    description = "${pname} from Pexels cropped to 4k.";
-    license = pkgs.lib.licenses.unfree;
-  };
+  meta.description = "${pname} from Pexels cropped to 4k.";
 
   src = pkgs.fetchurl {
     url = "https://images.pexels.com/photos/2387793/pexels-photo-2387793.jpeg";
