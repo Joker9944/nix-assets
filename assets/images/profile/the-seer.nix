@@ -1,4 +1,4 @@
-{pkgs, ...}: let
+{lib, pkgs, ...}: let
   mkTheSeerDerivation = resolution: pkgs.stdenv.mkDerivation rec {
     pname = "the-seer";
     version = "1.0.0";
@@ -16,7 +16,12 @@
       cp $src/NOTICE $out/share/avatars/
     '';
   };
-in {
-  "512x512" = mkTheSeerDerivation "512x512";
-  "1100x1100" = mkTheSeerDerivation "512x512";
-}
+in lib.attrsets.listToAttrs (
+  lib.lists.map (resolution: {
+    name = resolution;
+    value = mkTheSeerDerivation resolution;
+  }) [
+    "512x512"
+    "1200x1200"
+  ]
+)
