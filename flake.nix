@@ -26,12 +26,16 @@
               value =
                 if entry.value == "directory"
                 then createPkgsRecursive (lib.path.append dir entry.name)
-                else pkgs.callPackage (lib.path.append dir entry.name) {inherit utility;};
+                else
+                  pkgs.callPackage (lib.path.append dir entry.name) {
+                    inherit utility;
+                    assetsDir = ./assets;
+                  };
             })
             (lib.attrsets.attrsToList (lib.attrsets.filterAttrs (filename: filetype: filetype == "directory" || lib.strings.hasSuffix ".nix" filename) (builtins.readDir dir)))
           );
       in
-        createPkgsRecursive ./assets;
+        createPkgsRecursive ./pkgs;
 
       formatter = pkgs.alejandra;
     })
