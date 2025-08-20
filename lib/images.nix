@@ -1,6 +1,5 @@
 {
   lib,
-  pkgs,
 }: rec {
   mkImageDerivation = {
     pname,
@@ -9,6 +8,7 @@
     gravity ? "North",
     crop ? "16:9",
     resolution,
+    pkgs,
   } @ args:
     pkgs.stdenv.mkDerivation rec {
       inherit pname;

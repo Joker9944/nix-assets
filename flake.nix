@@ -12,11 +12,11 @@
     ...
   }: let
     inherit (nixpkgs) lib;
+
+    utility.custom = (import ./lib/images.nix {inherit lib;}) // (import ./lib/colors.nix {});
   in
     inputs.flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
-
-      utility.custom = import ./lib/imageDerivation.nix {inherit lib pkgs;};
     in {
       packages = let
         createPkgsRecursive = dir:
@@ -44,6 +44,10 @@
         custom = lib.attrsets.recursiveUpdate (lib.attrsets.optionalAttrs (prev ? custom) prev.custom) {
           assets = self.packages.${prev.system};
         };
+      };
+
+      palettes = {
+        dracula = import ./palettes/dracula.nix {inherit utility;};
       };
     };
 }
