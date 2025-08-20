@@ -4,11 +4,11 @@ with utility.custom; rec {
   foreground = white.dull;
   cursor = white.dull;
   background = {
-    lighter = mkColor "ECE9DF";
-    light = mkColor "DEDCCF";
+    lighter = mkColor "424450";
+    light = mkColor "343746";
     normal = mkColor "282A36";
-    dark = mkColor "CECCC0";
-    darker = mkColor "BCBAB3";
+    dark = mkColor "21222C";
+    darker = mkColor "191A21";
   };
   black = mkColorBrightnessTuple {
     dull = "21222C";
