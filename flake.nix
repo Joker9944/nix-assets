@@ -13,7 +13,12 @@
   }: let
     inherit (nixpkgs) lib;
 
-    utility.custom = (import ./lib/images.nix {inherit lib;}) // (import ./lib/colors.nix {});
+    utility.custom =
+      (import ./lib/images.nix {
+        inherit lib;
+        assetsDir = ./assets;
+      })
+      // (import ./lib/colors.nix {});
   in
     inputs.flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
@@ -26,11 +31,7 @@
               value =
                 if entry.value == "directory"
                 then createPkgsRecursive (lib.path.append dir entry.name)
-                else
-                  pkgs.callPackage (lib.path.append dir entry.name) {
-                    inherit utility;
-                    assetsDir = ./assets;
-                  };
+                else pkgs.callPackage (lib.path.append dir entry.name) {inherit utility;};
             })
             (lib.attrsets.attrsToList (lib.attrsets.filterAttrs (filename: filetype: filetype == "directory" || lib.strings.hasSuffix ".nix" filename) (builtins.readDir dir)))
           );
