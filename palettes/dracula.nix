@@ -1,57 +1,57 @@
-# Color palette based on https://draculatheme.com/spec
+# Color palette based on https://spec.draculatheme.com/
 {utility, ...}:
 with utility.custom; rec {
   foreground = white.dull;
   cursor = white.dull;
   background = {
-    lighter = mkColor "424450";
-    light = mkColor "343746";
-    normal = mkColor "282A36";
-    dark = mkColor "21222C";
-    darker = mkColor "191A21";
+    lighter = mkColor [66 68 80];
+    light = mkColor [52 55 70];
+    normal = mkColor [40 42 54];
+    dark = mkColor [33 34 44];
+    darker = mkColor [25 26 33];
   };
   black = mkColorBrightnessTuple {
-    dull = "21222C";
-    bright = "6272A4";
+    dull = [33 34 44];
+    bright = [98 114 164];
   };
   red = mkColorBrightnessTuple {
-    dull = "FF5555";
-    bright = "FF6E6E";
+    dull = [255 85 85];
+    bright = [255 110 110];
   };
   green = mkColorBrightnessTuple {
-    dull = "50FA7B";
-    bright = "69FF94";
+    dull = [80 250 123];
+    bright = [105 255 148];
   };
   yellow = mkColorBrightnessTuple {
-    dull = "F1FA8C";
-    bright = "FFFFA5";
+    dull = [241 250 140];
+    bright = [255 255 165];
   };
   blue = mkColorBrightnessTuple {
-    dull = "BD93F9";
-    bright = "D6ACFF";
+    dull = [189 147 249];
+    bright = [214 172 255];
   };
   magenta = mkColorBrightnessTuple {
-    dull = "FF79C6";
-    bright = "FF92DF";
+    dull = [255 121 198];
+    bright = [255 146 223];
   };
   cyan = mkColorBrightnessTuple {
-    dull = "8BE9FD";
-    bright = "A4FFFF";
+    dull = [139 233 253];
+    bright = [164 255 255];
   };
   white = mkColorBrightnessTuple {
-    dull = "F8F8F2";
-    bright = "FFFFFF";
+    dull = [248 248 242];
+    bright = [255 255 255];
   };
   functional = {
-    danger = mkColor "DE5735";
-    warning = mkColor "A39514";
-    success = mkColor "089108";
-    info = mkColor "0081D6";
-    focus = mkColor "815CD6";
+    danger = mkColor [222 87 53];
+    warning = mkColor [163 149 20];
+    success = mkColor [8 145 8];
+    info = mkColor [0 129 214];
+    focus = mkColor [129 92 214];
   };
   highlights = {
     line = black.bright;
-    text = mkColor "44475A";
-    interactive = mkColor "343746";
+    text = mkColor [68 71 90];
+    interactive = mkColor [52 55 70];
   };
 }

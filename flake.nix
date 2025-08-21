@@ -18,7 +18,7 @@
         inherit lib;
         assetsDir = ./assets;
       })
-      // (import ./lib/colors.nix {});
+      // (import ./lib/colors.nix {inherit lib;});
   in
     inputs.flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};

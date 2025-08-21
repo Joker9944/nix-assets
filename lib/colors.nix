@@ -1,4 +1,4 @@
-{...}: rec {
+{lib, ...}: rec {
   mkColorBrightnessTuple = {
     dull,
     bright,
@@ -7,9 +7,12 @@
     bright = mkColor bright;
   };
 
-  mkColor = color: {
-    hex = "#${color}";
-    rgb = "rgb(${color})";
-    rgba = alpha: "rgba(${color}${alpha})";
+  mkColor = color: let
+    toHex = lib.concatStrings (lib.map lib.toHexString color);
+    toRgb = lib.concatStringsSep "," (lib.map toString color);
+  in {
+    hex = "#${toHex}";
+    rgb = "rgb(${toRgb})";
+    rgba = alpha: "rgba(${toRgb},${toString alpha})";
   };
 }
