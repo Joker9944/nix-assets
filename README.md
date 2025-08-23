@@ -10,6 +10,7 @@ Special permission for the usage of `the seer` image was given to me by [scary-P
 
 ## Assets included
 
+<!--- cSpell:words adrien olichon eberhard grossgasteiger 4kwallpapers helpotters --->
 | file                                                                                                        | author                                                            | source                                                                                                                                               |
 |-------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------|
 | [the seer](assets/images/profile/the-seer.1500x2091.jpg)                                                    | [scary-PANDA](https://www.deviantart.com/scary-panda)             | [deviantart](https://www.deviantart.com/scary-panda/art/the-seer-704744067)                                                                          |

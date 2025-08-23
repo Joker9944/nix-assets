@@ -1,17 +1,19 @@
 {
   lib,
   assetsDir,
-}: rec {
-  mkExternalImageDerivation = {
-    pname,
-    type,
-    url,
-    sha256,
-    gravity ? "North",
-    crop ? "16:9",
-    resolution,
-    pkgs,
-  }:
+}:
+rec {
+  mkExternalImageDerivation =
+    {
+      pname,
+      type,
+      url,
+      sha256,
+      gravity ? "North",
+      crop ? "16:9",
+      resolution,
+      pkgs,
+    }:
     pkgs.stdenv.mkDerivation {
       inherit pname;
       version = "1.0.0";
@@ -20,7 +22,7 @@
         inherit url sha256;
       };
 
-      nativeBuildInputs = [pkgs.imagemagick];
+      nativeBuildInputs = [ pkgs.imagemagick ];
 
       dontUnpack = true;
 
@@ -37,13 +39,14 @@
       meta.description = "${pname} cropped to ${resolution}.";
     };
 
-  mkInternalImageDerivation = {
-    pname,
-    type,
-    filetype ? "png",
-    resolution,
-    pkgs,
-  }:
+  mkInternalImageDerivation =
+    {
+      pname,
+      type,
+      filetype ? "png",
+      resolution,
+      pkgs,
+    }:
     pkgs.stdenv.mkDerivation {
       inherit pname;
       version = "1.0.0";
@@ -64,25 +67,27 @@
       meta.description = "${pname} in ${resolution}.";
     };
 
-  mkImageDerivationSet = {
-    pname,
-    url ? null,
-    ...
-  } @ derivationArgs: {
-    definitions ? [
-      {resolution = "1920x1080";}
-      {resolution = "2560x1440";}
-      {resolution = "3840x2160";}
-    ],
-  } @ args:
+  mkImageDerivationSet =
+    {
+      pname,
+      url ? null,
+      ...
+    }@derivationArgs:
+    {
+      definitions ? [
+        { resolution = "1920x1080"; }
+        { resolution = "2560x1440"; }
+        { resolution = "3840x2160"; }
+      ],
+    }:
     lib.attrsets.listToAttrs (
       lib.lists.map (definition: {
         name = definition.resolution;
         value =
-          if url != null
-          then mkExternalImageDerivation (derivationArgs // definition)
-          else mkInternalImageDerivation (derivationArgs // definition);
-      })
-      definitions
+          if url != null then
+            mkExternalImageDerivation (derivationArgs // definition)
+          else
+            mkInternalImageDerivation (derivationArgs // definition);
+      }) definitions
     );
 }
