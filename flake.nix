@@ -2,7 +2,7 @@
   description = "nix-assets";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small";
     flake-utils.url = "github:numtide/flake-utils/main"; # cSpell:ignore numtide
     pre-commit-hooks = {
       url = "github:cachix/git-hooks.nix/master";
@@ -18,13 +18,6 @@
     }:
     let
       inherit (nixpkgs) lib;
-
-      utility.custom =
-        (import ./lib/images.nix {
-          inherit lib;
-          assetsDir = ./assets;
-        })
-        // (import ./lib/colors.nix { inherit lib; });
     in
     inputs.flake-utils.lib.eachDefaultSystem (
       system:
@@ -36,24 +29,27 @@
           let
             createPkgsRecursive =
               dir:
-              lib.attrsets.listToAttrs (
-                lib.lists.map
-                  (entry: {
-                    name = lib.strings.removeSuffix ".nix" entry.name;
-                    value =
-                      if entry.value == "directory" then
-                        createPkgsRecursive (lib.path.append dir entry.name)
-                      else
-                        pkgs.callPackage (lib.path.append dir entry.name) { inherit utility; };
-                  })
-                  (
-                    lib.attrsets.attrsToList (
-                      lib.attrsets.filterAttrs (
-                        filename: filetype: filetype == "directory" || lib.strings.hasSuffix ".nix" filename
-                      ) (builtins.readDir dir)
-                    )
-                  )
-              );
+              lib.pipe dir [
+                builtins.readDir
+                (lib.filterAttrs (
+                  filename: filetype: filetype == "directory" || lib.strings.hasSuffix ".nix" filename
+                ))
+                lib.attrsToList
+                (lib.map (entry: {
+                  name = lib.strings.removeSuffix ".nix" entry.name;
+                  value =
+                    if entry.value == "directory" then
+                      createPkgsRecursive (lib.path.append dir entry.name)
+                    else
+                      pkgs.callPackage (lib.path.append dir entry.name) {
+                        custom = {
+                          inherit (self) lib;
+                          helpers = self.packages.${system}.build-support;
+                        };
+                      };
+                }))
+                lib.listToAttrs
+              ];
           in
           createPkgsRecursive ./pkgs;
 
@@ -97,8 +93,13 @@
         };
       };
 
+      lib = import ./lib { inherit lib; };
+
       palettes = {
-        dracula = import ./palettes/dracula.nix { inherit utility; };
+        dracula = import ./palettes/dracula.nix {
+          inherit lib;
+          custom = { inherit (self) lib; };
+        };
       };
     };
 }

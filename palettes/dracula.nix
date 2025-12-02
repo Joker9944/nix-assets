@@ -1,9 +1,11 @@
 # Color palette based on https://spec.draculatheme.com/
-{ utility, ... }:
-with utility.custom;
-rec {
-  foreground = white.dull;
-  cursor = white.dull;
+{ lib, custom, ... }:
+let
+  inherit (custom.lib) mkColor;
+in
+lib.fix (self: {
+  foreground = self.white.dull;
+  cursor = self.white.dull;
   background = {
     lighter = mkColor [
       66
@@ -31,7 +33,7 @@ rec {
       33
     ];
   };
-  black = mkColorBrightnessTuple {
+  black = mkColor {
     dull = [
       33
       34
@@ -43,7 +45,7 @@ rec {
       164
     ];
   };
-  red = mkColorBrightnessTuple {
+  red = mkColor {
     dull = [
       255
       85
@@ -55,7 +57,7 @@ rec {
       110
     ];
   };
-  green = mkColorBrightnessTuple {
+  green = mkColor {
     dull = [
       80
       250
@@ -67,7 +69,7 @@ rec {
       148
     ];
   };
-  yellow = mkColorBrightnessTuple {
+  yellow = mkColor {
     dull = [
       241
       250
@@ -79,7 +81,7 @@ rec {
       165
     ];
   };
-  blue = mkColorBrightnessTuple {
+  blue = mkColor {
     dull = [
       189
       147
@@ -91,7 +93,7 @@ rec {
       255
     ];
   };
-  magenta = mkColorBrightnessTuple {
+  magenta = mkColor {
     dull = [
       255
       121
@@ -103,7 +105,7 @@ rec {
       223
     ];
   };
-  cyan = mkColorBrightnessTuple {
+  cyan = mkColor {
     dull = [
       139
       233
@@ -115,7 +117,7 @@ rec {
       255
     ];
   };
-  white = mkColorBrightnessTuple {
+  white = mkColor {
     dull = [
       248
       248
@@ -155,7 +157,7 @@ rec {
     ];
   };
   highlights = {
-    line = black.bright;
+    line = self.black.bright;
     text = mkColor [
       68
       71
@@ -167,4 +169,4 @@ rec {
       70
     ];
   };
-}
+})
