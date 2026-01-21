@@ -95,12 +95,5 @@
       };
 
       lib = import ./lib { inherit lib; };
-
-      palettes = {
-        dracula = import ./palettes/dracula.nix {
-          inherit lib;
-          custom = { inherit (self) lib; };
-        };
-      };
     };
 }
