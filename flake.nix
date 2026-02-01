@@ -23,35 +23,21 @@
       system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
+        custom.lib = self.lib.init pkgs;
       in
       {
-        packages =
-          let
-            createPkgsRecursive =
-              dir:
-              lib.pipe dir [
-                builtins.readDir
-                (lib.filterAttrs (
-                  filename: filetype: filetype == "directory" || lib.strings.hasSuffix ".nix" filename
-                ))
-                lib.attrsToList
-                (lib.map (entry: {
-                  name = lib.strings.removeSuffix ".nix" entry.name;
-                  value =
-                    if entry.value == "directory" then
-                      createPkgsRecursive (lib.path.append dir entry.name)
-                    else
-                      pkgs.callPackage (lib.path.append dir entry.name) {
-                        custom = {
-                          inherit (self) lib;
-                          helpers = self.packages.${system}.build-support;
-                        };
-                      };
-                }))
-                lib.listToAttrs
-              ];
-          in
-          createPkgsRecursive ./pkgs;
+        packages = lib.pipe ./pkgs [
+          builtins.readDir
+          lib.attrNames
+          (lib.map (filename: {
+            name = lib.removeSuffix ".nix" filename;
+            value = pkgs.callPackage (lib.path.append ./pkgs filename) {
+              inherit custom;
+              inherit (custom.lib) imageTools;
+            };
+          }))
+          lib.listToAttrs
+        ];
 
         devShells.default = pkgs.mkShell {
           inherit (self.checks.${system}.preCommitHooks) shellHook;

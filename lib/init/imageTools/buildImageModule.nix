@@ -6,7 +6,7 @@ lib.extendMkDerivation {
     {
       type,
       filetype ? "png",
-      resolution,
+      resolution ? "3840x2160",
       ...
     }:
     {
@@ -16,7 +16,7 @@ lib.extendMkDerivation {
         runHook preInstall
 
         mkdir -p $out/share/${finalAttrs.type}
-        cp ${finalAttrs.pname}.${finalAttrs.resolution}.${filetype} $out/share/${finalAttrs.type}/
+        cp ${finalAttrs.pname}.${finalAttrs.resolution}.${filetype} $out/share/${finalAttrs.type}/${finalAttrs.pname}.${filetype}
         if [[ -e NOTICE ]]; then
           cp NOTICE $out/share/${finalAttrs.type}/
         fi

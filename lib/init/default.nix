@@ -1,6 +1,8 @@
-{ lib, ... }@args:
-lib.fix (
-  self:
+{ lib, self, ... }@args:
+pkgs:
+(lib.removeAttrs self [ "init" ])
+// (lib.fix (
+  selfPkgs:
   lib.pipe ./. [
     builtins.readDir
     lib.attrNames
@@ -10,10 +12,11 @@ lib.fix (
       value = import (lib.path.append ./. filename) (
         args
         // {
-          inherit self;
+          inherit pkgs;
+          self = lib.recursiveUpdate self selfPkgs;
         }
       );
     }))
     lib.listToAttrs
   ]
-)
+))

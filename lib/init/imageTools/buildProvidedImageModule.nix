@@ -1,20 +1,15 @@
-{
-  lib,
-  custom,
-  ...
-}:
+{ lib, buildImageModule, ... }:
 lib.extendMkDerivation {
-  constructDrv = custom.helpers.buildImageModule;
+  constructDrv = buildImageModule;
   extendDrvArgs =
     finalAttrs:
     {
       pname,
       type ? "png",
-      context ? ../../assets,
       ...
     }:
     {
-      src = lib.path.append context "images/${type}/${pname}";
+      src = lib.path.append ../../../assets "images/${finalAttrs.type}/${finalAttrs.pname}";
 
       dontConfigure = true;
 

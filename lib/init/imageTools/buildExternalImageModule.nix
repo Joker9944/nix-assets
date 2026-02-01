@@ -1,15 +1,14 @@
 {
   lib,
   imagemagick,
-  custom,
+  buildImageModule,
   ...
 }:
 lib.extendMkDerivation {
-  constructDrv = custom.helpers.buildImageModule;
+  constructDrv = buildImageModule;
   extendDrvArgs =
     finalAttrs:
     {
-      imageBinary,
       gravity ? "North",
       crop ? "16:9",
       ...
@@ -17,9 +16,7 @@ lib.extendMkDerivation {
     {
       inherit gravity crop;
 
-      src = imageBinary;
-
-      nativeBuildInputs = lib.toList imagemagick;
+      nativeBuildInputs = [ imagemagick ];
 
       dontUnpack = true;
 
