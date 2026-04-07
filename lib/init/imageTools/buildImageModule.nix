@@ -12,13 +12,19 @@ lib.extendMkDerivation {
     {
       inherit type filetype resolution;
 
+      outputs = [
+        "out"
+        "notice"
+      ];
+
       installPhase = ''
         runHook preInstall
 
-        mkdir -p $out/share/${finalAttrs.type}
-        cp ${finalAttrs.pname}.${finalAttrs.resolution}.${filetype} $out/share/${finalAttrs.type}/${finalAttrs.pname}.${filetype}
+        cp ${finalAttrs.pname}.${finalAttrs.resolution}.${filetype} $out
+
+        mkdir $notice
         if [[ -e NOTICE ]]; then
-          cp NOTICE $out/share/${finalAttrs.type}/
+          cp NOTICE $notice/
         fi
 
         runHook postInstall
