@@ -10,7 +10,7 @@ imageTools.buildExternalImageModule {
 
   src = fetchurl {
     url = "https://images.pexels.com/photos/2387793/pexels-photo-2387793.jpeg";
-    sha256 = "sha256-2S9foYfeuFQOPA+Nqkk7Zvlcz+P9mOBzUQ+I4+kLeAc=";
+    sha256 = "sha256-Rp/Rm6joffisrg1aM5IqJiC6V6Gw4hNzf0vF0ecD+P4=";
   };
 
   type = "backgrounds";
