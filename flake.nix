@@ -56,7 +56,7 @@
                 args = [ "--fix=lf" ];
               };
               cspell.enable = true;
-              nixfmt-rfc-style.enable = true;
+              nixfmt.enable = true;
               nil.enable = true;
               statix.enable = true;
             };
